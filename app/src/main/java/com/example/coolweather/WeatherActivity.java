@@ -1,5 +1,6 @@
 package com.example.coolweather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.coolweather.db.AutoUpdateService;
 import com.example.coolweather.gson.Forecast;
 import com.example.coolweather.gson.Weather;
 import com.example.coolweather.util.HttpUtil;
@@ -156,6 +158,8 @@ private void showWeatherInfo(Weather weather){
 
     }
       weatherlayout.setVisibility(View.VISIBLE);
+    Intent intent=new Intent(this, AutoUpdateService.class);
+    startService(intent);
 }
 private void  loadBingPic(){
     String requestBingPic="http://guolin.tech/api/bing_pic";
