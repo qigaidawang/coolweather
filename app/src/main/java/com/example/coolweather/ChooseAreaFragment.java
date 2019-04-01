@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.coolweather.db.City;
 import com.example.coolweather.db.Country;
 import com.example.coolweather.db.Province;
+import com.example.coolweather.gson.Weather;
 import com.example.coolweather.util.HttpUtil;
 import com.example.coolweather.util.Utility;
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
@@ -82,10 +83,16 @@ public class ChooseAreaFragment extends android.support.v4.app.Fragment {
                     quryCountries();
                 }else if (currentLevel==LEVE_COUNTRY){
                     String weatherId=countryList.get(position).getWeatherId();
+                    if (getActivity() instanceof MainActivity){
                     Intent intent=new Intent(getActivity(),WeatherActivity.class);
                     intent.putExtra("weather_id",weatherId);
                     startActivity(intent);
-                    getActivity().finish();
+                    getActivity().finish();}else if (getActivity() instanceof WeatherActivity ){
+                        WeatherActivity activity=(WeatherActivity)getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
                 }
             }
         });
